@@ -1,0 +1,41 @@
+<script type="text/javascript">
+  $(function() {
+
+    $('#tree').full_tree({root: {id: '1', text: 'menu', url: '/sys/menus/tree'}, dynamic: true,
+      append_after: function(data_obj, dom_obj, callback){
+        $.save_update_box('<%=t "button.add"%> <%=t "sys.menu.text"%>', 500, 200, '/sys/menus/new',
+          function(){ },
+          function(obj){
+            //alert(obj.id + '::' + obj.name);
+            callback(obj);
+          }, {'menu[parent_id]': data_obj.id});
+      },
+      update_after: function(data_obj, dom_obj, callback){
+        $.save_update_box('<%=t "button.update"%> <%=t "sys.menu.text"%>', 500, 200, '/sys/menus/edit/'+data_obj.id,
+          function(){ },
+          function(obj){
+            //alert(obj.id + '::' + obj.name);
+            callback(obj);
+          });
+      },
+      remove_after: function(data_obj, dom_obj, callback){
+        //alert(data_obj.id)
+        $.confirm('<%=t "tip.delete.is"%>', function(callback_confirm){
+          Util.del('/sys/menus/'+data_obj.id, {}, function(json){
+            callback_confirm(json.v);
+            callback();
+          });
+        });
+      },
+      move_after: function(data_obj, after_parent_obj, dom_obj, callback){
+        //alert(after_parent_obj.id + ':::::' + data_obj.id)
+        Util.put('/sys/menus/'+data_obj.id, {'menu[parent_id]': after_parent_obj.id}, function(obj){
+          //alert(obj.entity.id + ':::')
+          callback(obj.entity);
+        });
+      }
+    });
+  });
+</script>
+<div id='tree' style="width: 400px;"></div>
+

@@ -1,0 +1,15 @@
+<script type="text/javascript">
+  $(function() {
+    simple_table('#c-table', {
+        header: ['code', 'name', 'language_code', 'currency_code'],
+        base_url: '/sys/countries',
+        width: 600,
+        height: 300,
+        title: '<%=t "sys.country.text"%>'
+      }
+    );
+  });
+
+</script>
+<div id="c-table"></div>
+

@@ -1,0 +1,181 @@
+workflow:
+  name: 文章处理
+  init_actions:
+    100:
+      name: 启动工作流
+      condition: group == editor and true # 仅作家组可以启动流程
+      before_function: puts '仅作家组可以启动流程'
+      results: # 转到step 1，流程所有者设为流程启动者
+        1:
+          step: 1
+          status: Queued
+          owner: author
+  steps:
+    1:
+      name: 撰写初稿  # 稿件都弄好了，校对一下吧
+      actions:
+        1:
+          name: 完成初稿
+          condition: status == Underway && true
+          before_function: puts '完成初稿'
+          after_function: puts 'Step:2的后处理函数'
+          results: # 如果是新手(假定新手的用户名为newplayer)，流转到分枝1
+            1:
+              split: 1
+              condition: caller == newplayer
+              after_function: puts 'Step:1的Action后处理函数'
+            2:
+              split: 2 # 其余情况跳转到分枝2
+    2:
+      name: 校对稿件
+      condition: status == Underway
+      actions:
+        1:
+          name: 准备校对积压的稿件   # 从队列中提取，准备校对
+          condition: status == Queued and group == editor     # 队列中 仅允许editor组的成员
+          before_function: puts "before_function"   # 设置caller变量为执行当前action的用户
+          results:
+            1:  # 状态变为Underway
+              step: 2
+              status: Underway
+              owner: caller
+        2:
+          name: 校对完成   # 检验完成，流转到下一步
+          condtion: status == Underway and group == editor     # 处理当前的任务(也就是说不在队列中的)  仅允许editor组的成员
+          before_function: step = 1   # 设置mostRecentOwner的值为第一阶段时的Owner
+          results:
+            1:
+              step: 3
+              status: Underway
+              owner: mostRecentOwner
+        3:
+          name: 处理不过来了，等一等    # 还有几个没有下理，排一下队，等我空闲了再说吧
+          condition: status == Underway and group == editor   # 仅允许editor组的成员
+          results:
+            1:
+              step: 2
+              status: Queued    # 转为排队等候状态
+    3:
+      name: 检查校对情况
+      condition: status == Underway and group == publisher   # publisher组的成员来检查
+      actions:
+        1:
+          name: 重新校对    # 错误比较多，重新校对
+          condition: status == Underway and group == publisher
+          before_function: step = 2
+          results:
+            1:
+              step: 2
+              status: Underway
+              owner: mostRecentOwner
+        2:
+          name: 需要二审
+          condtion: status == Underway and group == publisher
+          results:  # 转入二审阶段
+            1:
+              step: 4
+              status: Queued
+        3:
+          name: 可以出版了
+          condition: status == Underway and group == publisher
+          before_function: step = 2
+          results:
+            1:
+              step: 5
+              status: Underway
+              owner: mostRecentOwner 
+    4:
+      name: 二审阶段
+      condition: status == Underway and group == publisher
+      actions:
+        1:
+          name: 二审通过    # 二审通过，转到step2，等候出版
+          condition: status == Underway and group == publisher
+          before_function: step = 3
+          results:
+            1:
+              step: 3
+              status: Underway
+              owner: mostRecentOwner
+        2:
+          name: 从排队中取出准备二审    # 仍停留在此阶段
+          condition: status == Queued and group == publisher
+          before_functioin: puts ''
+          results:
+            1:
+              step: 4
+              status: Underway
+              owner: caller
+        3:
+          name: 好多要二审的，排队等等
+          condition: status == Underway and group == publisher
+          results: # 变为排队状态
+            1:
+              step: 4
+              status: Queued
+    5:
+      name: 出版稿件
+      actions:
+        1:
+          name: 出版
+          condition: status == Underway and group == publisher
+          before_function: puts ""
+          results:
+            1:
+              step: 5
+              status: Finished
+              owner: caller
+    6:
+      name: 设计封面
+      actions:
+        1:
+          name: 封面设计完成
+          condition: status == Underway and group == publisher
+          results:
+            1:
+              join: 1
+    7:
+      name: 设计插图
+      actions:
+        1:
+          name: 插图设计完毕
+          condition: status == Underway and group == publisher
+          results:
+            1:
+              step: 8
+              status: Finished
+              owner: test
+    8:
+      name: 排版
+      actions:
+        1:
+          name: 排版完毕
+          condition: status == Underway and group == publisher
+          results:
+            1:
+              join: 1
+  splits:
+    1:
+      results:
+        1:
+          step: 6
+          status: Underway
+          owner: test
+        2:
+          step: 7
+          status: Underway
+          owner: test
+    2:
+      results:
+        1:
+          step: 2
+          status: Queued
+  joins:
+    1:
+      condition: Finished.equals(jn.getStep(6).getStatus()) && Finished.equals(jn.getStep(8).getStatus())
+      results:
+        1:
+          step: 2
+          status: Underway
+          owner: test
+          

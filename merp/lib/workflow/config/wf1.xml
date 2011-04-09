@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE workflow PUBLIC "-//OpenSymphony Group//DTD OSWorkflow 2.6//EN" "http://www.opensymphony.com/osworkflow/workflow_2_8.dtd">
+<!--OSWorkFlow工作流定义文件修改 by 王力猛(wallimn@sohu.com)-->
+<!--欢迎转载，转载请保留这些信息。-->
+<workflow>
+  <initial-actions>
+    <action id="100" name="启动工作流">
+      <restrict-to>
+        <conditions type="AND">
+          <condition type="beanshell">
+            <arg name="script">true</arg>
+          </condition>
+          <condition type="class"><!--仅作家组可以启动流程-->
+            <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+            <arg name="group">writer</arg>
+          </condition>
+        </conditions>
+      </restrict-to>
+      <pre-functions>
+        <function type="class">
+          <arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+        </function>
+      </pre-functions>
+      <results><!--转到step 1，流程所有者设为流程启动者-->
+        <unconditional-result old-status="Finished" status="Underway" step="1" owner="${caller}"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="1" name="撰写初稿">
+      <external-permissions>
+        <permission name="permA">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class"><!--流程处于Underway状态(流程已经启动)-->
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class"><!--流程启动者（也即流程所有者）-->
+                <arg name="class.name">com.opensymphony.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+        </permission>
+      </external-permissions>
+      <actions>
+        <action id="1" name="完成初稿">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="beanshell">
+                <arg name="script">true</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="beanshell">
+              <arg name="script">
+                String caller = context.getCaller();
+                propertySet.setString("caller", caller);
+                boolean test = true;
+                String yuck = null;
+                String blah = "987654321";
+                System.out.println("Step:1预处理函数");
+              </arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result old-status="Finished" split="1">
+              <conditions type="AND"><!--如果是新手(假定新手的用户名为newplayer)，流转到分枝1-->
+                <condition type="beanshell">
+                  <arg name="script">
+                    propertySet.getString("caller").equals("newplayer")
+                  </arg>
+                </condition>
+              </conditions>
+              <post-functions>
+                <function type="beanshell">
+                  <arg name="script">
+                    System.out.println("Step:1的Action后处理函数");
+                  </arg>
+                </function>
+              </post-functions>
+            </result>
+            <unconditional-result old-status="Finished" split="2"/><!--其余情况跳转到分枝2-->
+          </results>
+          <post-functions>
+            <function type="beanshell">
+              <arg name="script">
+                System.out.println("Step:2的后处理函数");
+              </arg>
+            </function>
+            <!--
+            <function type="class">
+              <arg name="class.name">com.opensymphony.workflow.util.ScheduleJob</arg>
+              <arg name="triggerId">1</arg>
+              <arg name="jobName">testJob</arg>
+              <arg name="triggerName">testTrigger</arg>
+              <arg name="groupName">test</arg>
+
+              <arg name="repeat">10</arg>
+              <arg name="repeatDelay">2000</arg>
+              <arg name="cronExpression">0,5,10,15,20,25,30,35,40,45,50,55 * * * * ?</arg>
+
+              <arg name="username">test</arg>
+              <arg name="password">test</arg>
+
+              <arg name="local">true</arg>
+              <arg name="schedulerStart">true</arg>
+            </function>
+            -->
+          </post-functions>
+        </action>
+      </actions>
+    </step>
+    <step id="2" name="校对稿件"><!--稿件都弄好了，校对一下吧-->
+      <external-permissions>
+        <permission name="permB">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class"><!--状态为Underway-->
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class"><!--仅允许editor组的成员-->
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">editor</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+
+        </permission>
+      </external-permissions>
+      <actions>
+        <action id="2" name="准备校对积压的稿件"><!--从队列中提取，准备校对-->
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class"><!--队列中-->
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Queued</arg>
+              </condition>
+              <condition type="class"><!--仅允许editor组的成员-->
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">editor</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class"><!--设置caller变量为执行当前action的用户-->
+              <arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+            </function>
+          </pre-functions>
+          <results><!--状态变为Underway-->
+            <unconditional-result old-status="Finished" status="Underway" step="2" owner="${caller}"/>
+          </results>
+        </action>
+        <action id="3" name="校对完成"><!--检验完成，流转到下一步-->
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class"><!--处理当前的任务(也就是说不在队列中的)-->
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class"><!--仅允许editor组的成员-->
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">editor</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class"><!--设置mostRecentOwner的值为第一阶段时的Owner-->
+              <arg name="class.name">com.opensymphony.workflow.util.MostRecentOwner</arg>
+              <arg name="stepId">1</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result old-status="Finished" status="Underway" step="3" owner="${mostRecentOwner}"/>
+          </results>
+        </action>
+        <action id="4" name="处理不过来了，等一等"><!--还有几个没有下理，排一下队，等我空闲了再说吧-->
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class"><!--仅允许editor组的成员-->
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">editor</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results><!--转为排队等候状态-->
+            <unconditional-result old-status="Finished" status="Queued" step="2"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="3" name="检查校对情况">
+      <external-permissions>
+        <permission name="permA">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class"><!--publisher组的成员来检查-->
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">publisher</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+        </permission>
+      </external-permissions>
+      <actions>
+        <action id="5" name="重新校对"><!--错误比较多，重新校对-->
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">publisher</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">com.opensymphony.workflow.util.MostRecentOwner</arg>
+              <arg name="stepId">2</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result old-status="Finished" status="Underway" step="2" owner="${mostRecentOwner}"/>
+          </results>
+        </action>
+        <action id="6" name="需要二审"><!--需要二审-->
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">publisher</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results><!--转入二审阶段-->
+            <unconditional-result old-status="Finished" status="Queued" step="4"/>
+          </results>
+        </action>
+        <action id="7" name="可以出版了"><!--可以了，准备出版-->
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">publisher</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">com.opensymphony.workflow.util.MostRecentOwner</arg>
+              <arg name="stepId">2</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result old-status="Finished" status="Underway" step="5" owner="${mostRecentOwner}"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4" name="二审阶段"><!--二审阶段-->
+      <external-permissions>
+        <permission name="permC">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">publisher</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+        </permission>
+      </external-permissions>
+      <actions>
+        <action id="8" name="二审通过"><!--二审通过，转到step2，等候出版-->
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">publisher</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">com.opensymphony.workflow.util.MostRecentOwner</arg>
+              <arg name="stepId">3</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result old-status="Finished" status="Underway" step="3" owner="${mostRecentOwner}"/>
+          </results>
+        </action>
+        <action id="9" name="从排队中取出准备二审"><!--仍停留在此阶段-->
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Queued</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">publisher</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result old-status="Finished" status="Underway" step="4" owner="${caller}"/>
+          </results>
+        </action>
+        <action id="10" name="好多要二审的，排队等等">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">publisher</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results><!--变为排队状态-->
+            <unconditional-result old-status="Finished" status="Queued" step="4"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="5" name="出版稿件">
+      <actions>
+        <action id="11" name="出版">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">publisher</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result old-status="Finished" status="Finished" step="5" owner="${caller}"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="6" name="设计封面">
+      <actions>
+        <action name="封面设计完成" id="12">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+                <arg name="stepId">6</arg>
+              </condition>
+              <condition type="class"><!--仅允许美工组-->
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">designer</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result old-status="Finished" join="1"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="7" name="设计插图">
+      <actions>
+        <action name="插图设计完毕" id="13">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+                <arg name="stepId">7</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">designer</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result old-status="Finished" owner="test" status="Underway" step="8"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8" name="排版">
+      <actions>
+        <action name="排版完毕" id="14">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+                <arg name="stepId">8</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">com.opensymphony.workflow.util.OSUserGroupCondition</arg>
+                <arg name="group">designer</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result old-status="Finished" join="1"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+  <splits>
+    <split id="1">
+      <unconditional-result old-status="Finished" status="Underway" owner="test" step="6"/>
+      <unconditional-result old-status="Finished" status="Underway" owner="test" step="7"/>
+    </split>
+    <split id="2">
+      <unconditional-result old-status="Finished" status="Queued" step="2"/>
+    </split>
+  </splits>
+  <joins>
+    <join id="1">
+      <conditions type="AND">
+        <condition type="beanshell">
+          <arg name="script"><![CDATA[
+            "Finished".equals(jn.getStep(6).getStatus()) && "Finished".equals(jn.getStep(8).getStatus())
+            ]]></arg>
+        </condition>
+      </conditions>
+      <unconditional-result old-status="Finished" status="Underway" owner="test" step="2"/>
+    </join>
+  </joins>
+</workflow>
+

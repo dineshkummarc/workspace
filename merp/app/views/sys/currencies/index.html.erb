@@ -1,0 +1,15 @@
+<script type="text/javascript">
+  $(function() {
+    simple_table('#c-table', {
+        header: ['code', 'name', 'iso_code'],
+        base_url: '/sys/currencies',
+        width: 600,
+        height: 300,
+        title: '<%=t "sys.currency.text"%>'
+      }
+    );
+  });
+
+</script>
+<div id="c-table"></div>
+

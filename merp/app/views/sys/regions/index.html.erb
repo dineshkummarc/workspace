@@ -1,0 +1,14 @@
+<script type="text/javascript">
+  $(function() {
+    simple_table('#c-table', {
+        header: ['code', 'name', 'country_code'],
+        base_url: '/sys/regions',
+        width: 600,
+        height: 200,
+        title: '<%=t "sys.region.text"%>'
+      }
+    );
+  });
+</script>
+<div id="c-table"></div>
+

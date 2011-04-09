@@ -1,0 +1,14 @@
+<script type="text/javascript">
+  $(function() {
+    simple_table('#c-table', {
+        header: ['code', 'name'],
+        base_url: '/sys/units',
+        width: 600,
+        height: 200,
+        title: '<%=t "sys.unit.text"%>'
+      }
+    );
+  });
+</script>
+<div id="c-table"></div>
+

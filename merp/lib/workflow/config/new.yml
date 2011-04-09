@@ -1,0 +1,6 @@
+workflow:
+  init_actions:
+    1:
+      name: 'start'
+      before_action: 
+  steps:

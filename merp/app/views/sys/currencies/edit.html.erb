@@ -1,0 +1,21 @@
+<form action="/sys/currencies/<%=@currency.id%>" method="post">
+<input type="hidden" name="_method" value="put"/>
+<table class="input-table">
+  <tr>
+    <td class="lt"><%=t "sys.currency.code" %></td>
+    <td class="rt"><input class="input-text input-60" name="currency[code]" maxlength="20" value="<%=@currency.code%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.currency.name" %></td>
+    <td class="rt"><input class="input-text input-120" name="currency[name]" maxlength="50" value="<%=@currency.name%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.currency.full_name" %></td>
+    <td class="rt"><input class="input-text input-240" name="currency[full_name]" maxlength="200" value="<%=@currency.full_name%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.currency.iso_code" %></td>
+    <td class="rt"><input class="input-text input-60" name="currency[iso_code]" maxlength="200" value="<%=@currency.iso_code%>"/></td>
+  </tr>
+</table>
+</form>

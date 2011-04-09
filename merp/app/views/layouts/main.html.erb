@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.m.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/m.css"/>
+
+    <script type="text/javascript">
+      function simple_table(id, opts){
+        opts.base_url += "/";
+        $(id).c_table({header: opts.header, url: opts.base_url+'page', title: opts.title,
+          tr_dbclick: function(ele, t_self){
+            $.save_update_box('<%=t "button.update"%> '+opts.title, opts.width, opts.height, opts.base_url+'edit/'+ele.id, function(){}, function(){ t_self.reload(); });
+          },
+          btn_customer: [
+            ['add', '<%=t "button.add"%>', function(ids, objs, t_self) {
+              $.save_update_box('<%=t "button.add"%> '+opts.title, opts.width, opts.height, opts.base_url+'new', function(){}, function(){ t_self.reload(); });
+            }],
+            ['update', '<%=t "button.update"%>', function(ids, objs, t_self) {
+              if(ids.length <= 0){
+                $.alert('<%=t "tip.update.select"%>');
+                return ;
+              }
+              //alert(':::'+t_self)
+              $.save_update_box('<%=t "button.update"%> '+opts.title, opts.width, opts.height, opts.base_url+'edit/'+ids[0], function(){}, function(){ t_self.reload(); });
+            }],
+            ['delete', '<%=t "button.delete"%>', function(ids, objs, t_self) {
+
+              if(ids.length <= 0){
+                $.alert('<%=t "tip.delete.select"%>');
+                return ;
+              }
+
+              $.confirm('<%=t "tip.delete.is"%>', function(callback){
+
+                Util.del_all(opts.base_url+'delete_all', {'ids[]': ids}, function(json){
+                  callback(json.v);
+                  t_self.reload();
+
+                })
+              })
+            }],
+            ['refresh', '<%=t "button.refresh"%>', function(ids, objs, t_self){
+              t_self.reload();
+            }]
+          ]});
+      }
+    </script>
+
+  </head>
+
+  <body>
+    <!-- div header start -->
+    <div class="header">
+      <div class="h-left">
+        <a target="_blank" href="javascript:void(0);">INDEX</a>
+        <a target="_blank" href="javascript:void(0);">NEWS</a>
+        <a target="_blank" href="javascript:void(0);">SEARCH</a>
+        <a target="_blank" href="javascript:void(0);">BLOG</a>
+        <a href="javascript:void(0);" id="more">MORE</a>
+      </div>
+      <div class="h-right">
+        <a target="_blank" href="javascript:void(0);">反馈</a>
+        <a target="_blank" href="javascript:void(0);">设置</a>
+        <a target="_blank" href="javascript:void(0);">帮助</a>
+        <a href="javascript:void(0);">退出</a>
+      </div>
+    </div>
+    <div class="header-1">
+      <div class="h-left h-logo-title">
+        <!--MyLiang-Erp-->
+      </div>
+      <div class="h-right">
+        <span>
+          liangyuliang0335@gmail.com
+        </span>
+      </div>
+    </div>
+    <!-- div header end -->
+
+    <!-- div center content start -->
+    <%=yield%>
+    <!-- div center content end -->
+
+  </body>
+
+</html>
+

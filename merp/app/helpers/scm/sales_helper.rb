@@ -1,0 +1,2 @@
+module Scm::SalesHelper
+end

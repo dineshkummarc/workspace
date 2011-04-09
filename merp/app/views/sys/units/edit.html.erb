@@ -1,0 +1,13 @@
+<form action="/sys/units/<%=@unit.id%>" method="post">
+<input type="hidden" name="_method" value="put"/>
+<table class="input-table">
+  <tr>
+    <td class="lt"><%=t "sys.unit.code" %></td>
+    <td class="rt"><input class="input-text input-60" name="unit[code]" maxlength="20" value="<%=@unit.code%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.unit.name" %></td>
+    <td class="rt"><input class="input-text input-120" name="unit[name]" maxlength="50" value="<%=@unit.name%>"/></td>
+  </tr>
+</table>
+</form>

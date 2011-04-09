@@ -1,0 +1,14 @@
+[
+  {"id": "adapter", "text":"adapter", "url": "../get_nodes_1.json", "level": "1"},
+  {"id": "core", "text":"core", "url": "../get_nodes_1.json", "level": "1"},
+  {"id": "data", "text":"data", "url": "../get_nodes_1.json", "level": "1"},
+  {"id": "direct", "text":"direct", "url": "../get_nodes_1.json", "level": "1"},
+  {"id": "dd", "text":"dd", "url": "../get_nodes_1.json", "level": "1"},
+  {"id": "ext-core", "text":"ext-core", "url": "../get_nodes_1.json", "level": "1"},
+  {"id": "debug", "text":"debug", "level": "1", "leaf": "1"},
+  {"id": "state", "text":"state", "url": "../get_nodes_1.json", "level": "1"},
+  {"id": "util", "text":"util", "url": "../get_nodes_1.json", "level": "1"},
+  {"id": "widgets", "text":"widgets", "url": "../get_nodes_1.json", "level": "1"},
+  {"id": "index", "text":"index.js", "level": "1", "leaf": "1"},
+  {"id": "last", "text":"last", "level": "1", "leaf": "1"}
+]

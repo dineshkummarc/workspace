@@ -1,0 +1,15 @@
+<script type="text/javascript">
+  $(function() {
+    simple_table('#c-table', {
+        header: ['code', 'name', 'full_name', 'city', 'street', 'country_code', 'language_code', 'currency_code'],
+        base_url: '/sys/companies',
+        width: 600,
+        height: 400,
+        title: '<%=t "sys.company.text"%>'
+      }
+    );
+  });
+
+</script>
+<div id="c-table"></div>
+

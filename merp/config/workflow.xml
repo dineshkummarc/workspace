@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE workflow PUBLIC "-//OpenSymphony Group//DTD OSWorkflow 2.7//EN"
+"http://www.opensymphony.com/osworkflow/workflow_2_7.dtd">
+<workflow>
+    <initial-actions>
+        <action id="0" name="开始">
+            <pre-functions>
+                <function type="class">
+                    <arg name="class.name">
+                        com.opensymphony.workflow.util.Caller
+                    </arg>
+                </function>
+            </pre-functions>
+            <results>
+                <unconditional-result old-status="Finished"
+                    status="Underway" step="1" owner="${caller}" />
+            </results>
+        </action>
+    </initial-actions>
+
+    <steps>
+        <step id="1" name="填假单">
+            <external-permissions>
+                <permission name="permA">
+                    <restrict-to>
+                        <conditions type="AND">
+                            <condition type="class"><!--流程处于Underway状态(流程已经启动)-->
+                                <arg name="class.name">
+                                    com.opensymphony.workflow.util.StatusCondition
+                                </arg>
+                                <arg name="status">Underway</arg>
+                            </condition>
+                            <condition type="class">
+                                <arg name="class.name">
+                                    com.opensymphony.workflow.util.AllowOwnerOnlyCondition
+                                </arg>
+                            </condition>
+                        </conditions>
+                    </restrict-to>
+                </permission>
+            </external-permissions>
+            <actions>
+                <action id="1" name="送出">
+                    <restrict-to>
+                        <conditions type="AND">
+                            <condition type="class"><!--流程处于Underway状态(流程已经启动)-->
+                                <arg name="class.name">
+                                    com.opensymphony.workflow.util.StatusCondition
+                                </arg>
+                                <arg name="status">Underway</arg>
+                            </condition>
+                            <condition type="class">
+                                <arg name="class.name">
+                                    com.opensymphony.workflow.util.AllowOwnerOnlyCondition
+                                </arg>
+                            </condition>
+                        </conditions>
+                    </restrict-to>
+                    <pre-functions>
+                        <function type="class">
+                            <arg name="class.name">
+                                com.opensymphony.workflow.util.Caller
+                            </arg>
+                        </function>
+
+                    </pre-functions>
+                    <results>
+                        <unconditional-result old-status="Finished"
+                            split="1" status="Queued">
+                            <post-functions>
+                                <function type="class">
+                                    <arg name="class.name">
+                                        net.rubyeye.leavesys.service.workflow.SendRemindInfFunction
+                                    </arg>
+                                    <arg name="groupName">
+                                        AND (GROUPNAME='dept_manager' or
+                                        GROUPNAME='comp_manager')
+                                    </arg>
+                                    <arg name="content">
+                                        you have leavemsg to
+                                        check!please check it!
+                                    </arg>
+                                </function>
+                            </post-functions>
+                        </unconditional-result>
+                    </results>
+                </action>
+            </actions>
+        </step>
+        <step id="2" name="部门经理批假单">
+            <actions>
+                <action id="2" name="准许">
+                    <restrict-to>
+                        <conditions>
+                            <condition type="class">
+                                <arg name="class.name">
+                                    com.opensymphony.workflow.util.OSUserGroupCondition
+                                </arg>
+                                <arg name="group">dept_manager</arg>
+                            </condition>
+                        </conditions>
+                    </restrict-to>
+                    <pre-functions>
+                        <function type="class">
+                            <arg name="class.name">
+                                com.opensymphony.workflow.util.Caller
+                            </arg>
+                        </function>
+                        <function type="beanshell">
+                            <arg name="script">
+                                propertySet.setString("action1",
+                                "success");
+                            </arg>
+                        </function>
+                    </pre-functions>
+                    <results>
+                        <unconditional-result old-status="Finished"
+                            status="Queued" join="1" owner="${caller}" />
+                    </results>
+                </action>
+
+                <action id="3" name="驳回">
+                    <restrict-to>
+                        <conditions>
+                            <condition type="class">
+                                <arg name="class.name">
+                                    com.opensymphony.workflow.util.OSUserGroupCondition
+                                </arg>
+                                <arg name="group">dept_manager</arg>
+                            </condition>
+                        </conditions>
+                    </restrict-to>
+                    <pre-functions>
+                        <function type="class">
+                            <arg name="class.name">
+                                com.opensymphony.workflow.util.Caller
+                            </arg>
+                        </function>
+                        <function type="beanshell">
+                            <arg name="script">
+                                propertySet.setString("action1",
+                                "fail");
+                            </arg>
+                        </function>
+                    </pre-functions>
+                    <results>
+                        <unconditional-result old-status="Finished"
+                            status="Queued" join="2" owner="${caller}" />
+                    </results>
+                </action>
+            </actions>
+        </step>
+
+        <step id="3" name="公司经理批假单">
+            <actions>
+                <action id="4" name="准许">
+                    <restrict-to>
+                        <conditions>
+                            <condition type="class">
+                                <arg name="class.name">
+                                    com.opensymphony.workflow.util.OSUserGroupCondition
+                                </arg>
+                                <arg name="group">comp_manager</arg>
+                            </condition>
+                        </conditions>
+                    </restrict-to>
+                    <pre-functions>
+                        <function type="class">
+                            <arg name="class.name">
+                                com.opensymphony.workflow.util.Caller
+                            </arg>
+                        </function>
+                        <function type="beanshell">
+                            <arg name="script">
+                                propertySet.setString("action2",
+                                "success");
+                            </arg>
+                        </function>
+                    </pre-functions>
+                    <results>
+                        <unconditional-result old-status="Finished"
+                            status="Queued" join="1" owner="${caller}" />
+                    </results>
+                </action>
+
+                <action id="5" name="驳回">
+                    <restrict-to>
+                        <conditions>
+                            <condition type="class">
+                                <arg name="class.name">
+                                    com.opensymphony.workflow.util.OSUserGroupCondition
+                                </arg>
+                                <arg name="group">dept_manager</arg>
+                            </condition>
+                        </conditions>
+                    </restrict-to>
+                    <pre-functions>
+                        <function type="class">
+                            <arg name="class.name">
+                                com.opensymphony.workflow.util.Caller
+                            </arg>
+                        </function>
+                        <function type="beanshell">
+                            <arg name="script">
+                                propertySet.setString("action2",
+                                "fail");
+                            </arg>
+                        </function>
+                    </pre-functions>
+                    <results>
+                        <unconditional-result old-status="Finished"
+                            status="Queued" join="2" owner="${caller}" />
+                    </results>
+                </action>
+            </actions>
+        </step>
+
+        <step id="4" name="停止" />
+    </steps>
+    <splits>
+        <split id="1">
+            <unconditional-result old-status="Finished" status="Queued"
+                step="2" />
+            <unconditional-result old-status="Finished" status="Queued"
+                step="3" />
+        </split>
+    </splits>
+    <joins>
+        <join id="1">
+            <conditions type="AND">
+                <condition type="beanshell">
+                    <arg name="script">
+                        <![CDATA[
+     "Finished".equals(jn.getStep(2).getStatus()) &&
+        "Finished".equals(jn.getStep(3).getStatus())&&"success".equals(propertySet.getString("action1"))&&
+        "success".equals(propertySet.getString("action2"))
+      ]]>
+                    </arg>
+                </condition>
+            </conditions>
+            <unconditional-result old-status="Finished" status="Queued"
+                step="4"/>
+        </join>
+
+        <join id="2">
+            <conditions type="OR">
+                <condition type="beanshell">

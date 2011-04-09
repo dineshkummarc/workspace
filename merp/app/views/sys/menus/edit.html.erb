@@ -1,0 +1,32 @@
+<form action="/sys/menus/<%=@menu.id%>" method="post">
+<input type="hidden" name="_method" value="put"/>
+<input type="hidden" name="menu[level]" value="<%=@menu.level%>"/>
+<input type="hidden" name="menu[leaf]" value="<%=@menu.leaf%>"/>
+<input type="hidden" name="menu[parent_id]" value="<%=@menu.parent_id%>"/>
+<table class="input-table">
+  <tr>
+    <td class="lt"><%=t "sys.menu.code" %></td>
+    <td class="rt"><input class="input-text input-60" name="menu[code]" maxlength="20" value="<%=@menu.code%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.menu.name" %></td>
+    <td class="rt"><input class="input-text input-120" name="menu[name]" maxlength="50" value="<%=@menu.name%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.menu.url" %></td>
+    <td class="rt"><input class="input-text input-240" name="menu[url]" maxlength="100" value="<%=@menu.url%>"/></td>
+  </tr>
+  <!--tr>
+    <td class="lt"><%=t "sys.menu.parent_code" %></td>
+    <td class="rt">
+      <div class="adv-search adv-search-input"
+        url="/sys/menus/page"
+        pros="code"
+        params="menu[code]"
+        name="menu[parent_code]"
+        value="">
+      </div>
+    </td>
+  </tr-->
+</table>
+</form>

@@ -1,0 +1,85 @@
+workflow:   
+  name: 我的
+  init_actions:   
+    1:   
+      name: 启动请假申请工作流   
+      results:   
+        1:
+          step: 1   
+          status: Queued        # Underway   
+          owner: employee   
+  steps:   
+    1:   
+      name: 请假申请   
+      actions:   
+        1:   
+          name: 提交需求申请   
+          condition: wf_params[group]==employee   
+          after_action:    
+            if curr_instance_step(1).owner=='manager'   
+              puts "步骤 1 提交需求申请 满足条件结果 需部门经理审批..."  
+            end  
+          results:   
+            1:
+              condition: @wf_params['dayCount']>3   
+              step: 2
+              status: Underway   
+              owner: manager   
+            2:
+              step: 3   
+              status: Underway   
+              owner: hrl   
+    2:   
+      name: 请假申请审核   
+      actions:   
+        1:   
+          name: 部门主管审批请假申请   
+          condition: curr_instance_step(2).status=='Underway' and @wf_params['group']=='manager'   
+          results:   
+            1:
+              condition: @wf_params['opinion']==2   
+              step: 5   
+              status: Underway   
+            2: 
+              step: 3   
+              status: Underway   
+              owner: hrl   
+    3:   
+      name: 请假申请审核   
+      actions:   
+        1:   
+          name: 人力资源主管审批请假申请   
+          results:   
+            1:
+              condition: @wf_params['opinion']==2   
+              step: 5   
+              status: Underway   
+            2:
+              step: 5   
+              status: Underway   
+    4:   
+      name: 请假申请结果通知   
+      actions:   
+        1:   
+          name: 请假申请获准邮件通知   
+          auto: true  
+          before_acton:
+            puts "步骤 4 自动动作 请假申请获准邮件通知 Send mail 祝贺你"  
+          results:
+            1:
+              step: 6   
+              status: Finished   
+    5:   
+      name: 请假申请结果通知   
+      actions:   
+        1:   
+          name: 请假申请没能获准邮件通知   
+          before_action:    
+            puts "步骤 5 自动动作 请假申请没能获准邮件通知 Send mail 很抱歉$$$$$$$"  
+          results:
+            1:
+              step: 6   
+              status: Finished   
+    6:   
+      name: flow over   
+

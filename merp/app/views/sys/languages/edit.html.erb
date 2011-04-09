@@ -1,0 +1,13 @@
+<form action="/sys/languages/<%=@language.id%>" method="post">
+<input type="hidden" name="_method" value="put"/>
+<table class="input-table">
+  <tr>
+    <td class="lt"><%=t "sys.language.code" %></td>
+    <td class="rt"><input class="input-text input-60" name="language[code]" maxlength="20" value="<%=@language.code%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.language.name" %></td>
+    <td class="rt"><input class="input-text input-120" name="language[name]" maxlength="50" value="<%=@language.name%>"/></td>
+  </tr>
+</table>
+</form>

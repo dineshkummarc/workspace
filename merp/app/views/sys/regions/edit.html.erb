@@ -1,0 +1,25 @@
+<form action="/sys/regions/<%=@region.id%>" method="post">
+<input type="hidden" name="_method" value="put"/>
+<table class="input-table">
+  <tr>
+    <td class="lt"><%=t "sys.region.code" %></td>
+    <td class="rt"><input class="input-text input-60" name="region[code]" maxlength="20" value="<%=@region.code%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.region.name" %></td>
+    <td class="rt"><input class="input-text input-120" name="region[name]" maxlength="50" value="<%=@region.name%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.region.country_code"%></td>
+    <td class="rt">
+      <div class="adv-search adv-search-input"
+        url="/sys/countries/page"
+        pros="code"
+        params="country[code]"
+        name="region[country_code]"
+        key="<%=@region.country_code%>">
+      </div>
+    </td>
+  </tr>
+</table>
+</form>

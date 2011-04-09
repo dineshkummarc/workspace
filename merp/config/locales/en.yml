@@ -1,0 +1,64 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  button:
+    add: "add"
+    update: "update"
+    delete: "delete"
+    refresh: "refresh"
+  tip:
+    success: "%{title} success"
+    failure: "%{title} failure"
+    delete:
+      is: "are you sure delete selected data?"
+      select: "please data deleted"
+    update:
+      select: "please data updated"
+  sys:
+    text: "sys"
+    company:
+      text: "company"
+      code: "code"
+      name: "name"
+      full_name: "full name"
+      postal_code: "postal code"
+      city: "city"
+      street: "street"
+      country_code: "country"
+      language_code: "language"
+      currency_code: "currency"
+    menu:
+      text: "menu"
+      code: "code"
+      name: "name"
+      url: "url"
+      parent_code: "parent menu"
+    country:
+      text: "country"
+      code: "code"
+      name: "name"
+      full_name: "full name"
+      language_code: "language"
+      currency_code: "currency"
+      date_format: "date format"
+      num_format: "no. format"
+    language:
+      text: "language"
+      code: "code"
+      name: "name"
+    region:
+      text: "region"
+      code: "code"
+      name: "name"
+      country_code: "country"
+    currency:
+      text: "currency"
+      code: "code"
+      name: "short text"
+      full_name: "long text"
+      iso_code: "ISO code"
+    unit:
+      text: "unit"
+      code: "code"
+      name: "name"

@@ -1,0 +1,1168 @@
+/*** common css **********/
+html {
+  filter: expression(document.execCommand("BackgroundImageCache", false, true)); /** ie img 闪动 ***/
+}
+
+img, a {
+  blr: expression(this.onFocus=this.blur())
+}
+
+body, div, span, object, frame, h1, h2, h3, h4, h5, h6, p, blockquote, a, code, em, img, q, small, strong, dd, dl, dt, li, ol, ul, fieldset, form, label, table, tbody, tr, th, td, input, menu {
+  margin: 0;
+  padding: 0
+}
+
+body, input {
+  font-size: 12px; /** font-family:'lucida grande',tahoma,verdana,arial,STHeiTi,simsun,sans-serif; */
+  font-family: Arial, Helvetica, Sans-Serif;
+  color: #666666;
+}
+
+img {
+  vertical-align: middle;
+}
+
+a img, :link img, :visited img {
+  border: 0
+}
+
+a {
+  color: #5c5c5c;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active, a:focus {
+  outline: none;
+}
+
+table {
+  border-collapse: collapse;
+  color: #686868;
+  width: 100%;
+  table-layout: fixed; /* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+}
+
+table tr td {
+  word-break: keep-all; /* 不换行 */
+  white-space: nowrap; /* 不换行 */
+  overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+  text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+}
+
+/*** table tr td{
+-moz-user-select:none;
+}***/
+ul {
+  list-style: none
+}
+
+input.inputtext:focus, textarea:focus, select:focus {
+  -moz-background-clip: border;
+  -moz-background-inline-policy: continuous;
+  -moz-background-origin: padding;
+  background: #FCFCFC none repeat scroll 0 0;
+}
+
+.input-text {
+  border: 1px solid #9CB8CC;
+  padding: 1px 2px;
+  font-size: 12px;
+  height: 18px;
+  vertical-align: top;
+  -moz-box-shadow:inset 1px 1px 1px rgba(0,0,0,.1);     /* For Firefox3.6+ */
+  -webkit-box-shadow:inset 1px 1px 1px rgba(0,0,0,.1);  /* For Chrome5+, Safari5+ */
+  box-shadow:inset 1px 1px 1px rgba(0,0,0,.1);          /* For Latest Opera */
+
+}
+.input-text:focus{
+  border-color: #d9d804;
+  -moz-box-shadow:0 0 5px rgba(217,216,4,.8);     /* For Firefox3.6+ */
+  -webkit-box-shadow:0 0 5px rgba(217,216,4,.8);  /* For Chrome5+, Safari5+ */
+  box-shadow:0 0 5px rgba(217,216,4,.8);          /* For Latest Opera */
+}
+
+.input-text.border-none {
+  border: none;
+}
+
+.input-60{ width: 60px; }
+.input-120{ width: 120px; }
+.input-240{ width: 240px; }
+
+/** .input-text:hover{
+border: 1px solid #9CB8CC;
+}**/
+.loading {
+  background: #FFF1A8;
+}
+
+/******************** main frame header *************************************/
+.header {
+  border-bottom: 1px solid #9CB8CC;
+  height: 25px;
+  line-height: 25px;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.header-1 {
+  padding: 0 10px;
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #9CB8CC;
+}
+
+.header a {
+  padding: 0px 3px;
+}
+
+/** .header a:hover{
+background: #5D99CE;
+color: #fff;
+border-left: 1px solid red;
+border-right: 1px solid red;
+}**/
+.h-left {
+  float: left;
+  overflow: hidden;
+  position: relative;
+}
+
+.h-right {
+  float: right;
+  overflow: hidden;
+}
+
+/**
+@font-face {
+  font-family: akaDora;
+  src: url('../font/akaDora.ttf');
+}
+
+@font-face {
+  font-family: WendelinNormalKursiv;
+  src: url('../font/WendelinNormalKursiv.ttf')
+}
+**/
+
+.h-logo-title {
+  font-size: 24px;
+  /** font-family: 'WendelinNormalKursiv'; **/
+  width: 200px;
+  height: 40px;
+  margin-top: 5px;
+  background: url('../images/maps_logo.gif') no-repeat 0 0; /** Wendelin Aller Light Italic **/
+
+}
+
+.center-left {
+  float: left;
+  left: 0;
+  position: absolute;
+  width: 200px;
+  min-height: 650px; /* for modern browsers*/
+  height: auto !important; /* for modern browsers*/
+  height: 650px; /* for IE5.x and IE6*/
+  border-right: 1px solid #9CB8CC;
+  padding: 5px;
+}
+
+.center-right {
+  margin-left: 210px;
+  min-height: 650px; /* for modern browsers*/
+  height: auto !important; /* for modern browsers*/
+  height: 650px; /* for IE5.x and IE6*/
+  padding: 5px;
+}
+
+.footer {
+  clear: both;
+  background-color: #333;
+  height: 100px;
+}
+
+/*************** input table **************************/
+
+.input-table{
+}
+.input-table > tbody > tr > td{
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+}
+.input-table > tbody > tr > td.lt{
+  text-align: right;
+  width: 100px;
+  font-weight: bold;
+}
+.input-table > tbody > tr > td.rt{
+  text-align: left;
+}
+
+
+/*************** center table *************************/
+.center-table {
+  padding: 0;
+}
+
+.center-table .title{
+  font-size: 14px;
+  font-weight: bold;
+  color: #8AB134;
+  padding: 5px 10px 2px 10px;
+  text-shadow: 1px 1px 0px #fff;
+  border-left: 6px solid #8AB134;
+  float: left;
+}
+
+.center-table .bar {
+  height: 30px;
+}
+
+.center-table .bar.top {
+  padding-top: 10px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.center-table .bar.bottom {
+}
+
+.center-table .content {
+  border-color: #cccccc;
+  border-width: 1px 0 1px 0;
+  border-style: solid;
+}
+
+.center-table .content .foot {
+  background-color: #F7F7F7;
+  color: #666666;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  text-align: left;
+}
+
+.center-table .content .foot a {
+  color: #005EAC;
+}
+
+.center-table .content table td {
+/** height: 24px; **/
+  line-height: 18px;
+  overflow: hidden;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid #cccccc;
+  padding: 4px 5px;
+  cursor: default;
+}
+
+.center-table .content table td input {
+  margin-top: 4px;
+  height: 13px;
+  overflow: hidden;
+}
+
+.center-table .content table thead tr {
+  background: none repeat scroll 0 0 #F9F9F9;
+}
+
+.center-table .content table tbody tr {
+}
+
+tr.hover {
+  background: none repeat scroll 0 0 #FFFFE1;
+}
+
+tr.visit {
+  background: none repeat scroll 0 0 #FFFFCA;
+}
+
+.center-table .content table tbody tr td {
+}
+
+.center-table .content table thead tr td {
+  border-left: 1px solid #cccccc;
+}
+
+.b-r-none {
+  border-left: none;
+}
+
+.tipinfo {
+  background: none repeat scroll 0 0 #FFFFE1;
+  color: #565656;
+  height: 25px;
+  line-height: 25px;
+  overflow: hidden;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+/*************** box **********************************/
+.loading{
+  background: url("../images/ajax-loader.gif") no-repeat;
+  height: 32px;
+  width: 32px;
+  vertical-align: middle;
+}
+
+.box {
+  /**border-color: #DBE8F2;
+  border-style: solid;
+  border-width: 0 3px 3px 0; **/
+  border: 4px solid #DBE8F2;
+  position: absolute;
+  white-space: nowrap;
+  z-index: 150;
+  background: #fff;
+}
+
+.box iframe {
+  background: #fff; /** #F0F5F8 #DBE8F2; */
+}
+
+.box .sub {
+  position: relative;
+  border: 1px solid #9CB8CC;
+}
+
+.box div.title {
+  border-bottom: 1px solid #DDDDDD;
+  color: #005EAC;
+  /** float: none !important; **/
+  font-size: 14px;
+  font-weight: bold;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+}
+
+.box div.content {
+  background: none repeat scroll 0 0 #FFFFFF;
+}
+
+.box div.foot {
+  border-top: 1px solid #DDDDDD;
+  padding: 5px 10px;
+  text-align: right;
+  /** height: 30px;
+  line-height: 30px;**/
+}
+
+/*************** header menu **************************/
+.h-menu {
+  border-color: #DBE8F2;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  position: absolute;
+  white-space: nowrap;
+  z-index: 150;
+  background: #fff;
+}
+
+.h-menu li {
+  display: inline;
+  float: left;
+  width: 100%;
+}
+
+.h-menu li a {
+  text-indent: 10px;
+  display: block;
+  line-height: 22px;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.h-menu li a:hover {
+  background: #5D99CE;
+  color: #fff;
+}
+
+.h-menu ul {
+  float: left;
+  width: 98px;
+  border: 1px solid #9CB8CC;
+}
+
+/********************* simple tab ***********************************/
+.simple-tab ul {
+  list-style: none;
+  border-bottom: 1px solid #CEE1EE;
+  *zoom: 1;
+  font-size: 12px;
+}
+
+.simple-tab ul:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+
+.simple-tab li {
+  float: left;
+  margin-right: 3px;
+  padding: 5px 5px;
+}
+
+.simple-tab li.current {
+  padding: 3px 10px 7px;
+}
+
+.simple-tab li a {
+  float: left;
+  display: block;
+  text-decoration: none;
+  color: #005EAC;
+}
+
+.simple-tab li a:hover {
+  text-decoration: underline;
+}
+
+.simple-tab li.current {
+  background-color: #FFF;
+  border: 1px solid #CEE1EE;
+  border-bottom: 0;
+  position: relative;
+  bottom: -1px;
+}
+
+.simple-tab li.current a {
+  font-weight: bold;
+  color: #000;
+}
+
+.clearfix {
+  display: block;
+}
+
+/******************** tree ***********************************/
+.j-tree {
+  font-size: 12px;
+}
+
+.j-tree li {
+  white-space: nowrap;
+}
+
+.j-tree-node {
+  cursor: pointer;
+  *margin-top: -2px !important; /*** ie ***/
+}
+
+.j-tree-node-hover {
+  background: #EEEEEE;
+}
+
+.j-tree-node-selected {
+  background: #D9E8FB;
+}
+
+.j-tree-indent {
+  display: inline-block;
+  width: 16px;
+  height: 18px;
+  vertical-align: middle;
+}
+
+.j-tree-hit, .j-tree-icon, .j-tree-hit-icon {
+  cursor: pointer;
+  display: inline-block;
+  width: 16px;
+  height: 18px;
+  vertical-align: top;
+}
+
+.j-tree-title {
+  display: inline-block;
+  line-height: 16px;
+  text-decoration: none;
+  vertical-align: top;
+  *vertical-align: middle !important; /** ie ***/
+  padding: 0 2px;
+  white-space: nowrap;
+}
+
+/******************* tree icon **********************************/
+.j-tree-elbow-end-minus {
+  background: url('../images/tree/elbow-end-minus.gif') no-repeat;
+}
+
+.j-tree-elbow-end-plus {
+  background: url('../images/tree/elbow-end-plus.gif') no-repeat;
+}
+
+.j-tree-elbow {
+  background: url('../images/tree/elbow.gif') no-repeat;
+}
+
+.j-tree-elbow-line {
+  background: url('../images/tree/elbow-line.gif') no-repeat;
+}
+
+.j-tree-elbow-end {
+  background: url('../images/tree/elbow-end.gif') no-repeat;
+}
+
+.j-tree-elbow-plus {
+  background: url('../images/tree/elbow-plus.gif') no-repeat;
+}
+
+.j-tree-elbow-minus {
+  background: url('../images/tree/elbow-minus.gif') no-repeat;
+}
+
+.j-tree-loading {
+  background: url('../images/tree/loading.gif') no-repeat;
+}
+
+.j-tree-folder {
+  background: url('../images/tree/folder.gif') no-repeat;
+}
+
+.j-tree-folder-open {
+  background: url('../images/tree/folder-open.gif') no-repeat;
+}
+
+.j-tree-leaf {
+  background: url('../images/tree/leaf.gif') no-repeat;
+}
+
+/*** button ***/
+.button {
+  padding: 4px 10px 3px 10px;
+  margin-left: 5px;
+  border: solid 1px #8AB134;
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  background-image: url('../images/bkg-50.png');
+  background-repeat: repeat-x;
+  font-size: 12px;
+  font-weight: bold;
+  height: 16px;
+  text-decoration: none;
+  color: #40740D;
+  -moz-border-radius-bottomleft: 3px;
+  -moz-border-radius-bottomright: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  -webkit-border-radius: 3px;
+  text-shadow: 2px 2px 0px #fff;
+}
+
+.button:hover {
+  color: #8AB134;
+  text-decoration: none;
+}
+
+.button img {
+  position: absolute;
+  top: -4px;
+  left: -12px;
+  border: none;
+}
+
+/****************** facebook button *******************************/
+.ui-button {
+  -moz-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  background: url('../images/6svdixne.png') repeat scroll 0 0 #EEEEEE;
+  border-color: #999999 #999999 #888888;
+  border-style: solid;
+  border-width: 1px;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 6px;
+  text-decoration: none;
+  vertical-align: top;
+  white-space: nowrap;
+  height: 20px;
+  line-height: 20px;
+}
+
+.ui-blue {
+  background-color: #5B74A8;
+  background-position: 0 -48px;
+  border-color: #29447E #29447E #1A356E;
+  color: #FFFFFF;
+}
+
+.ui-button:hover {
+  text-decoration: none;
+}
+
+/*************************** pagination ****************************/
+.pagination {
+  padding: 3px; /** margin: 3px; **/
+  text-align: center;
+  font-size: 12px;
+  float: right;
+  line-height: 25px;
+}
+
+.pagination a {
+  padding: 5px;
+  margin: 2px;
+  text-decoration: none; /* no underline */
+  color: #036CB4;
+  height: 30px;
+  line-height: 30px;
+}
+
+.pagination.top a {
+  border: 1px solid #ccc; /** #EEE; ***/
+  border-bottom: 1px solid #fff;
+}
+
+.pagination.bottom a {
+  border: 1px solid #ccc; /** #EEE; ***/
+  border-top: 1px solid #fff;
+}
+
+.pagination a:hover,
+.pagination a:active {
+  color: #666;
+}
+
+.pagination.top a:hover,
+.pagination.top a:active {
+  border: 1px solid #999;
+  border-bottom: 1px solid #fff;
+}
+
+.pagination.bottom a:hover,
+.pagination.bottom a:active {
+  border: 1px solid #999;
+  border-top: 1px solid #fff;
+}
+
+.pagination .current {
+  padding: 5px;
+  margin: 2px;
+  font-weight: bold; /** background-color: #036CB4; ***/
+  color: #036cb4;
+}
+
+.pagination.top .current {
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #fff;
+}
+
+.pagination.bottom .current {
+  border: 1px solid #ccc;
+  border-top: 1px solid #fff;
+}
+
+.pagination .disabled {
+  padding: 5px;
+  margin: 2px;
+  color: #DDD;
+}
+
+.pagination.top .disabled {
+  border: 1px solid #ccc; /** EEE; **/
+  border-bottom: 1px solid #fff;
+}
+
+.pagination.bottom .disabled {
+  border: 1px solid #ccc; /** EEE; **/
+  border-top: 1px solid #fff;
+}
+
+/*********************** div select ***********************/
+
+.simple-sel {
+/** border-bottom:1px solid #cccccc; **/
+  float: left;
+  line-height: 20px;
+  height: 20px;
+  padding: 1px 2px;
+  /*position: relative;*/
+  border: 1px solid #9CB8CC;
+  -moz-box-shadow:inset 1px 1px 1px rgba(0,0,0,.1);     /* For Firefox3.6+ */
+  -webkit-box-shadow:inset 1px 1px 1px rgba(0,0,0,.1);  /* For Chrome5+, Safari5+ */
+  box-shadow:inset 1px 1px 1px rgba(0,0,0,.1);          /* For Latest Opera */
+}
+
+.simple-sel.hover {
+  border: 1px solid #9CB8CC;
+}
+
+
+.simple-sel span {
+  border-right: 1px solid #E8ECF8;
+  cursor: pointer;
+  display: block;
+  white-space: nowrap;
+  padding-left: 5px;
+}
+
+.simple-sel span a {
+  background: none repeat scroll 0 0 transparent; /** color:#0066CC; ***/
+  display: block;
+  float: left;
+  position: relative;
+  text-decoration: none;
+}
+
+.simple-select{
+  /** position: absolute; **/
+}
+
+.sel-menu {
+  border-color: #DBE8F2;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  width: 110px;
+  position: absolute;
+  z-index: 15;
+  top: 22px;
+  left: -1px;
+  background: #fff;
+}
+
+/** .sel_menu .arrow{
+display:block;
+width:12px;
+height:7px;
+position:absolute;
+background:url(../images/icon.gif) no-repeat 0 -302px;
+top:-7px;
+right:40px
+}**/
+.sel-menu ul {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid #9CB8CC;
+  _zoom: 1
+}
+
+.sel-menu li {
+  height: 25px;
+  line-height: 25px
+}
+
+.sel-menu li a {
+  display: block;
+  text-decoration: none !important;
+  font-size: 12px;
+  text-indent: 10px;
+  width: 110px;
+  overflow: hidden;
+}
+
+.sel-menu li a:hover {
+  background: #B8C8E8;
+  color: #fff;
+}
+
+/********************* date css *****************************/
+/* Some resets for compatibility with existing CSS */
+.date_selector, .date_selector * {
+  width: auto;
+  height: auto;
+  border: none;
+  background: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+}
+
+.date_selector {
+  background: #F2F2F2;
+  border: 1px solid #bbb;
+  padding: 5px;
+  margin: -1px 0 0 0;
+  position: absolute;
+  z-index: 201;
+  display: none;
+  font-size: 12px;
+}
+
+.date_selector_ieframe {
+  position: absolute;
+  z-index: 200;
+  display: none;
+}
+
+.date_selector .nav {
+  width: 17.5em; /* 7 * 2.5em */
+  height: 20px;
+}
+
+.date_selector .month_nav, .date_selector .year_nav {
+  margin: 0 0 3px 0;
+  padding: 0;
+  display: block;
+  position: relative;
+  text-align: center;
+}
+
+.date_selector .month_nav {
+  float: left;
+  width: 100px;
+}
+
+.date_selector .year_nav {
+  float: right;
+  width: 100px; /** margin-right: -8px; /* Compensates for cell borders */
+}
+
+.date_selector .month_name, .date_selector .year_name {
+  font-weight: bold;
+  line-height: 20px;
+}
+
+.date_selector .button {
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  line-height: 17px;
+  font-weight: bold;
+  color: #003C78;
+  text-align: center;
+  font-size: 120%;
+  overflow: hidden;
+  border: 1px solid #F2F2F2;
+}
+
+.date_selector .button:hover, .date_selector .button.hover {
+  background: none;
+  color: #003C78;
+  cursor: pointer;
+  border-color: #ccc;
+}
+
+.date_selector .prev {
+  left: 0;
+}
+
+.date_selector .next {
+  right: 0;
+}
+
+.date_selector table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  clear: both;
+}
+
+.date_selector th, .date_selector td {
+  width: 2.5em;
+  height: 2em;
+  padding: 0;
+  text-align: center;
+  color: black;
+}
+
+.date_selector td {
+  border: 1px solid #ccc;
+  line-height: 2em;
+  text-align: center;
+  white-space: nowrap;
+  color: #003C78;
+  background: white;
+}
+
+.date_selector td.today {
+  background: #FFFEB3;
+}
+
+.date_selector td.unselected_month {
+  color: #ccc;
+}
+
+.date_selector td.selectable_day {
+  cursor: pointer;
+}
+
+.date_selector td.selected {
+  background: #D8DFE5;
+  font-weight: bold;
+}
+
+.date_selector td.selectable_day:hover, .date_selector td.selectable_day.hover {
+  background: #003C78;
+  color: white;
+}
+
+/************************************ facebox div open window ****************************************/
+
+#facebox .b {
+  background: url(../images/facebox/b.png);
+}
+
+#facebox .tl {
+  background: url(../images/facebox/tl.png);
+}
+
+#facebox .tr {
+  background: url(../images/facebox/tr.png);
+}
+
+#facebox .bl {
+  background: url(../images/facebox/bl.png);
+}
+
+#facebox .br {
+  background: url(../images/facebox/br.png);
+}
+
+#facebox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  text-align: left;
+}
+
+#facebox .popup {
+  position: relative;
+}
+
+#facebox table {
+  border-collapse: collapse;
+  width: 500px;
+}
+
+#facebox td {
+  border-bottom: 0;
+  padding: 0;
+}
+
+#facebox .body {
+/** padding: 10px; **/
+  background: #fff;
+  border: 1px solid #005EAC; /** width: 370px; **/
+}
+
+#facebox .loading {
+  text-align: center;
+}
+
+#facebox .image {
+  text-align: center;
+}
+
+#facebox img {
+  border: 0;
+  margin: 0;
+}
+
+#facebox .f-header {
+  background: none repeat scroll 0 0 #3777BC;
+  border-bottom: 1px solid #005EAC;
+  color: white;
+  float: none !important;
+  font-size: 14px;
+  font-weight: bold;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+}
+
+#facebox .f-content {
+  background: none repeat scroll 0 0 #FFFFFF;
+  padding: 10px;
+  /** border-color:#005EAC;
+  border-right:1px solid #005EAC;
+  border-style:solid;
+  border-width:0 1px 1px; **/
+}
+
+#facebox .f-footer {
+  border-top: 1px solid #DDDDDD;
+  padding: 5px 10px;
+  text-align: right;
+}
+
+#facebox .tl, #facebox .tr, #facebox .bl, #facebox .br {
+  height: 10px;
+  width: 10px;
+  overflow: hidden;
+  padding: 0;
+}
+
+#facebox_overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+.facebox_hide {
+  z-index: -100;
+}
+
+.facebox_overlayBG {
+  background-color: #000;
+  z-index: 99;
+}
+
+* html #facebox_overlay {
+/* ie6 hack */
+  position: absolute;
+  height: expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
+}
+
+/****************** search box div window ******************************/
+.searchbox {
+  position: absolute; /** position: relative;  **/
+  z-index: 200;
+  background: #fff;
+  border-width: 3px;
+  border-style: solid;
+  border-color: #DBE8F2; /** border-top: none; **/
+}
+
+.searchbox-c {
+  border: 1px solid #A3A5E6;
+}
+
+.searchbox .title {
+  height: 25px;
+  line-height: 25px;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #0066CC;
+}
+
+.adv-search {
+  /*position: relative;*/
+  float: left;
+  padding: 0px 2px 1px 0;
+  _padding: 0; /*** ie6 ***/
+  border: 1px solid #9CB8CC;
+  height: 20px;
+  line-height: 20px;
+  -moz-box-shadow:inset 1px 1px 1px rgba(0,0,0,.1);     /* For Firefox3.6+ */
+  -webkit-box-shadow:inset 1px 1px 1px rgba(0,0,0,.1);  /* For Chrome5+, Safari5+ */
+  box-shadow:inset 1px 1px 1px rgba(0,0,0,.1);          /* For Latest Opera */
+}
+
+.adv-search:hover {
+  border-color: #9CB8CC;
+}
+
+.drop-icon {
+  display: inline-block;
+  height: 11px;
+  width: 11px;
+  margin: 5px 0 0 5px;
+}
+
+.icon-rt {
+  background: url('../images/dropright.gif') no-repeat 0 0;
+  /**position: relative;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=corp, src='../images/dropright.png');**/
+}
+
+.simple-sel span a.icon-bt {
+  background: url('../images/dropbottom.gif') no-repeat 0 0;
+  /**position: relative;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='../images/dropbottom.png');**/
+}
+
+/************************************* login css **************************************/
+.login-header {
+  height: 50px;
+  position: relative;
+  border-bottom: 1px solid #9CB8CC;
+  width: 980px;
+  margin: 0 auto;
+  padding: 15px 10px 0;
+}
+
+.login-content {
+  margin: 0 auto;
+  padding: 20px 12px 0;
+  *padding-top: 50px !important;
+  width: 940px;
+}
+
+.login-form-row {
+  padding: 8px 0;
+  text-align: left;
+}
+
+.login-form-row .login-form-label {
+  display: block;
+  float: left;
+  text-align: right;
+  padding: 3px 5px 3px 0;
+  width: 100px;
+  font-weight: bold;
+}
+
+#footer {
+  color: #737373;
+  font-size: 12px;
+  margin: 0 auto;
+  width: 980px;
+}
+
+#footer .liner {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #B3B3B3;
+  font-size: 2px;
+  height: 50px;
+}
+
+#footer .content {
+  border-top: 1px solid #EEEEEE;
+  margin-bottom: 30px;
+  padding: 8px;
+  position: relative;
+}
+
+.login-content-1 {
+  width: 640px;
+  padding-top: 10px;
+  border: 1px solid #9CB8CC;
+  margin-top: 20px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-content-title {
+  margin: 5px 20px 0 20px;
+  border-bottom: 1px solid #AAAAAA;
+  padding: 6px 0 10px;
+}
+
+.login-content-sub {
+  padding: 6px 0 10px;
+}
+
+.login-input {
+  padding: 3px;
+  width: 200px;
+  font-weight: bold;
+  color: #666666;
+  font-size: 14px;
+}
+
+/** .login-input:focus{
+border-left: 5px solid #BDC7D8;
+}**/
+

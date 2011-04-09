@@ -1,0 +1,64 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title> sales new </title>
+</head>
+<body>
+<form method="post" action="/scm/sales/apply">
+  <table border="1">
+    <!--tr>
+    <td>id:</td>
+    <td><input name="sale[id]" /></td>
+    </tr-->
+    <tr>
+      <td>name:</td>
+      <td><input name="sale[name]"/></td>
+    </tr>
+    <tr>
+      <td>describe:</td>
+      <td><input name="sale[describe]"/></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="submit" value="申请"/>
+        <input type="button" value="一审"/>
+        <input type="button" value="终审"/>
+      </td>
+    </tr>
+  </table>
+</form>
+
+<form method="post" action="/scm/sales/apply">
+  <table border="1">
+    <tr>
+      <td>id:</td>
+      <td><input name="sale[id]"/></td>
+    </tr>
+    <tr>
+      <td>name:</td>
+      <td><input name="sale[name]"/></td>
+    </tr>
+    <tr>
+      <td>describe:</td>
+      <td><input name="sale[describe]"/></td>
+    </tr>
+    <tr>
+      <td>workflow:</td>
+      <td>
+        <select name="workflow">
+          <option value="workflow-database">qingjia</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="submit" value="申请"/>
+        <input type="button" value="一审"/>
+        <input type="button" value="终审"/>
+      </td>
+    </tr>
+  </table>
+</form>
+
+</body>
+</html>

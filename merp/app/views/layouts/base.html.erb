@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.m.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/m.css"/>
+
+    <script type="text/javascript">
+
+      var ajax_forms = null;
+      function button_ok(before_callback, after_callback, params){
+        //ajax_forms[0].submit();
+        $('form').ajax_form({
+          params: params,
+          before: function(){ before_callback(); return true; },
+          after: function(obj){ after_callback(obj.entity || {}); }})[0].submit();
+      }
+
+      $(function(){
+        //$('form').ajax_form({after: function(){}});
+        setTimeout(function(){
+          $('#main_loading').hide();
+        }, 500);
+
+      });
+
+    </script>
+  </head>
+
+  <body>
+
+    <!-- div center content start -->
+    <div style="padding: 10px; position: absolute; z-index:10; left: 200px; top: 20px;" id="main_loading">
+      <div class="loading"></div>
+    </div>
+
+    <div>
+      <%=yield%>
+    </div>
+    <!-- div center content end -->
+
+  </body>
+
+</html>
+

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="javascripts/jquery.js">
+    </script>
+    <script type="text/javascript" src="javascripts/jquery.m.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/m.css"/>
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript">
+      $(function() {
+          $('#more').menu({
+            json: [{
+              text: 'Manager'
+            },{
+              text: 'Felling'
+            },{
+              text: 'Hello'
+            },{
+              text: 'VIP Mail'
+            }]
+          });
+          $('#tree').tree({root: {url: 'get_nodes.json'}});
+          /** $('.content table tbody tr').bind('mouseenter', function(){
+              if(this.className != 'visit')
+                this.className = 'hover';
+            }).bind('mouseleave', function(){
+              if(this.className != 'visit')
+                this.className = '';
+            });
+          var tbody_input = $('.content table tbody tr td input');
+          var thead_input = $('.content table thead tr td input');
+          thead_input.click(function(){
+            tbody_input.each(function(){
+              if(this.checked){
+                $(this).parent().parent().attr('class', '');
+                this.checked = false;
+              }else{
+                $(this).parent().parent().attr('class', 'visit');
+                this.checked = true;
+              }
+            });  
+          });
+          tbody_input.click(function(){
+            if(!this.checked) $(this).parent().parent().attr('class', '');
+            else $(this).parent().parent().attr('class', 'visit');
+          });
+          var cfoot = $('.content .foot');
+          $('#sel-all', cfoot).click(function(){
+            tbody_input.each(function(){
+              if(this.checked) return ;
+                $(this).parent().parent().attr('class', 'visit')
+                this.checked = true;
+            });
+            //thead_input.parent().parent().attr('class', 'visit');
+            thead_input.attr('checked', true);
+          });
+          $('#sel-rall', cfoot).click(function(){
+            thead_input.click();    
+          });
+          $('#sel-nall', cfoot).click(function(){
+            tbody_input.each(function(){
+              if(!this.checked) return ;
+                $(this).parent().parent().attr('class', '')
+                this.checked = false;
+            });
+            //thead_input.parent().parent().attr('class', 'visit');
+            thead_input.attr('checked', false);
+          }); **/
+
+      });
+      
+  </script>
+  </head>
+
+  <body>
+    <!-- div header start -->
+    <div class="header">
+      <div class="h-left">
+        <a target="_blank" href="javascript:void(0);">INDEX</a>
+        <a target="_blank" href="javascript:void(0);">NEWS</a>
+        <a target="_blank" href="javascript:void(0);">SEARCH</a>
+        <a target="_blank" href="javascript:void(0);">BLOG</a>
+        <a href="javascript:void(0);" id="more">MORE</a>
+      </div>
+      <div class="h-right">
+        <a target="_blank" href="javascript:void(0);">反馈</a>
+        <a target="_blank" href="javascript:void(0);">设置</a>
+        <a target="_blank" href="javascript:void(0);">帮助</a>
+        <a href="javascript:void(0);">退出</a>
+      </div>
+    </div>
+    <div class="header-1">
+      <div class="h-left h-logo-title">
+        <!--MyLiang-Erp-->
+      </div>
+      <div class="h-right">
+        <span>
+          liangyuliang0335@gmail.com
+        </span>
+      </div>
+    </div>
+    <!-- div header end -->
+    <!-- div center start -->
+    <div class="center-left">
+      <div id='tree'>
+      </div>
+    </div>
+    <div class="center-right">
+      <div class="simple-tab">
+        <ul class="clearfix">
+          <li class="title">新鲜事</li>
+          <li class="current">
+            <a href="javascript:void(0);">全部</a>
+          </li>
+          <li>
+            <a href="javascript:void(0);">状态</a>
+          </li>
+          <li>
+            <a href="javascript:void(0);">相册</a>
+          </li>
+          <li>
+            <a href="javascript:void(0);">分享</a>
+          </li>
+          <li>
+            <a href="javascript:void(0);">日志</a>
+          </li>
+          <li>
+            <a href="javascript:void(0);">公共主页</a>
+          </li>
+        </ul>
+      </div>
+      <div id="c-table"></div>
+
+      date: <input class="input-text date_input" type="text"/><br/><br/>
+      <br/><br/>
+
+      <div class="adv-search" data="{url:'', params:{id: '1'}, pros:['id','name']}"></div>
+      <div class="simple-select" 
+        data="{json: [{id: '1', name: 'Manager', delt: true}, {id: '2', name: 'jiao'}],pros: ['id', 'name']}">
+      </div>
+      
+      <br/><br/>
+
+      <a href="#iframe" rel="facebox">open_div</a>
+      <input type="button" value="open-win" onclick="open_win();"/>
+      <script type="text/javascript">
+        function open_win(){
+          $.facebox({ title: 'OpenWin', info: 'something...'});
+        }
+      </script>
+      <a class="button" href="javascript:void(0);"><img src="images/button.png" alt="" />登录</a>
+      <a class="button" href="javascript:void(0);">登录</a>
+    </div>
+
+    <div id="iframe">
+      <form>
+        <table border="0">
+          <tr>
+            <td>user_name:</td>
+            <td><input type="text"/></td>
+          </tr>
+          <tr>
+            <td>email:</td>
+            <td><input type="text"/></td>
+          </tr>
+          <tr>
+            <td>telphone:</td>
+            <td><input type="text"/></td>
+          </tr>
+          <tr>
+            <td>cellphone:</td>
+            <td><input type="text"/></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+
+    <!-- div center end -->
+    <style type="text/css">
+    </style>
+  </body>
+
+</html>
+

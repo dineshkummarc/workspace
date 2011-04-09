@@ -1,0 +1,65 @@
+<form action="/sys/countries/<%=@country.id%>" method="post">
+<input type="hidden" name="_method" value="put"/>
+<table class="input-table">
+  <tr>
+    <td class="lt"><%=t "sys.country.code" %></td>
+    <td class="rt"><input class="input-text input-60" name="country[code]" maxlength="20" value="<%=@country.code%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.country.name" %></td>
+    <td class="rt"><input class="input-text input-120" name="country[name]" maxlength="50" value="<%=@country.name%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.country.full_name" %></td>
+    <td class="rt"><input class="input-text input-240" name="country[full_name]" maxlength="200" value="<%=@country.full_name%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.country.language_code"%></td>
+    <td class="rt">
+      <div class="adv-search adv-search-input"
+        url="/sys/languages/page"
+        pros="code"
+        params="language[code]"
+        name="country[language_code]"
+        key="<%=@country.language_code%>">
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.country.currency_code"%></td>
+    <td class="rt">
+      <div class="adv-search adv-search-input"
+        url="/sys/currencies/page"
+        pros="code"
+        params="currency[code]"
+        name="country[currency_code]"
+        key="<%=@country.currency_code%>">
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.country.date_format"%></td>
+    <td class="rt">
+      <div class="simple-sel" key="<%=@country.date_format%>"
+        data="{json: [{id: '1', name: 'DD.MM.YYYY'},
+         {id: '2', name: 'YYYY.MM.DD'},
+         {id: '3', name: 'MM/DD/YYYY'},
+         {id: '4', name: '年/月/日'},
+         {id: '5', name: 'MM-DD-YYYY'},
+         {id: '6', name: 'YYYY-DD-MM'}
+         ]}" name="country[date_format]">
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.country.num_format"%></td>
+    <td class="rt">
+      <div class="simple-sel" key="<%=@country.num_format%>"
+        data="{json: [{id: '1', name: '1,234,567.89'},
+         {id: '2', name: '1 234 567.89'}
+         ]}" name="country[num_format]">
+      </div>
+    </td>
+  </tr>
+</table>
+</form>

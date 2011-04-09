@@ -1,0 +1,66 @@
+<form action="/sys/companies/<%=@company.id%>" method="post">
+<input type="hidden" name="_method" value="put"/>
+<table class="input-table">
+  <tr>
+    <td class="lt"><%=t "sys.company.code" %></td>
+    <td class="rt"><input class="input-text input-60" name="company[code]" maxlength="20" value="<%=@company.code%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.company.name" %></td>
+    <td class="rt"><input class="input-text input-120" name="company[name]" maxlength="50" value="<%=@company.name%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.company.full_name" %></td>
+    <td class="rt"><input class="input-text input-240" name="company[full_name]" maxlength="200" value="<%=@company.full_name%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.company.street" %></td>
+    <td class="rt"><input class="input-text input-240" name="company[street]" maxlength="200" value="<%=@company.street%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.company.city" %></td>
+    <td class="rt"><input class="input-text input-120" name="company[city]" maxlength="50" value="<%=@company.city%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.company.postal_code" %></td>
+    <td class="rt"><input class="input-text input-60" name="company[postal_code]" maxlength="20" value="<%=@company.postal_code%>"/></td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.company.country_code"%></td>
+    <td class="rt">
+      <div class="adv-search adv-search-input"
+        url="/sys/countries/page"
+        pros="code"
+        params="country[code]"
+        name="company[country_code]"
+        key="<%=@company.country_code%>">
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.company.language_code"%></td>
+    <td class="rt">
+      <div class="adv-search adv-search-input"
+        url="/sys/languages/page"
+        pros="code"
+        params="language[code]"
+        name="company[language_code]"
+        key="<%=@company.language_code%>">
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="lt"><%=t "sys.company.currency_code"%></td>
+    <td class="rt">
+      <div class="adv-search adv-search-input"
+        url="/sys/currencies/page"
+        pros="code"
+        params="currency[code]"
+        name="company[currency_code]"
+        key="<%=@company.currency_code%>">
+      </div>
+    </td>
+  </tr>
+
+</table>
+</form>
